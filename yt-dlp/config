@@ -1,0 +1,4 @@
+-o "~/gallery-dl/ytdlp/%(fulltitle)s [%(id)s].%(ext)s"
+-f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best"
+--no-mtime
+--downloader aria2c
