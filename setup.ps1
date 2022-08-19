@@ -2,7 +2,7 @@
 .SYNOPSIS
     Adapted setup ps1 file from https://gist.github.com/mikepruett3/7ca6518051383ee14f9cf8ae63ba18a7/
 .DESCRIPTION
-    Script uses scoop
+    PowerShell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://gist.githubusercontent.com/Xyn0gen/ba6d61a4397bb45eaf3d9f216e63f047/raw/setup.ps1'))"
 .NOTES
     **NOTE** Will configure the Execution Policy for the "CurrentUser" to Unrestricted.
 #>
@@ -136,30 +136,10 @@ if (!$(scoop config aria2-warning-enabled) -eq $False) {
     scoop config aria2-warning-enabled false
 }
 
-# if (!($Env:GIT_SSH)) {
-#     Write-Verbose -Message "Setting GIT_SSH User Environment Variable"
-#     [System.Environment]::SetEnvironmentVariable('GIT_SSH', (Resolve-Path (scoop which ssh)), 'USER')
-# }
-# if ((Get-Service -Name ssh-agent).Status -ne "Running") {
-#     Start-Process -FilePath "PowerShell" -ArgumentList "Set-Service","ssh-agent","-StartupType","Manual" -Verb RunAs -Wait -WindowStyle Hidden
-# }
-
-
-## Add Buckets
-
-
-# UNIX Tools
-# Write-Verbose -Message "Removing curl Alias..."
-# if (Get-Alias -Name curl -ErrorAction SilentlyContinue) {
-#     Remove-Item alias:curl    
-# }
-# if (!($Env:TERM)) {
-#     Write-Verbose -Message "Setting TERM User Environment Variable"
-#     [System.Environment]::SetEnvironmentVariable("TERM", "xterm-256color", "USER")
-# }
 
 # Install WinGet Packages
 $WinGet = @(
+    "Microsoft.PowerShell"
     "CodecGuide.K-LiteCodecPack.Basic",
     "Google.Chrome",
     "Discord.Discord",
@@ -181,14 +161,14 @@ Enable-Bucket -Bucket "java"
 
 # Install Scoop Packages
 $Scoop = @(
+    "7zip",
     "neovim",
-    "openjdk8",
+    "openjdk8-redhat",
     "openjdk11",
     "openjdk",
     "python",
     "yt-dlp",
     "ffmpeg",
-    "aria2",
     "imagemagick"
     )
 
@@ -209,64 +189,6 @@ foreach ($item in $Choco) {
 }
 
 
-# Customize DOS/PowerShell Environment
-# Write-Verbose -Message "Customize DOS/PowerShell Environment..."
-# if ((Get-ItemProperty -Path "HKCU:\Software\Microsoft\Command Processor").AutoRun -eq $Null) {
-#     Start-Process -FilePath "cmd" -ArgumentList "/c","clink","autorun","install" -Wait -WindowStyle Hidden
-# }
-# Start-Process -FilePath "cmd" -ArgumentList "/c","concfg","import","solarized-dark" -Verb RunAs -Wait
-
-# Install Visual Studio Code Integrations
-#if (!(Get-Item -Path "HKCU:\Software\Classes\Directory\shell\Open with &Code" -ErrorAction Ignore)) {
-#    Write-Verbose -Message "Install Visual Studio Code Integrations..."
-#    Start-Process -FilePath "cmd" -ArgumentList "/c","reg","import","%UserProfile%\scoop\apps\vscode\current\install-context.reg" -Verb RunAs -Wait -WindowStyle Hidden
-#    Start-Process -FilePath "cmd" -ArgumentList "/c","reg","import","%UserProfile%\scoop\apps\vscode\current\nstall-associations.reg" -Verb RunAs -Wait -WindowStyle Hidden
-#}
-
-# Pin Run to Taskbar
-#Start-Process -FilePath "PowerShell" -ArgumentList "syspin","'$Env:AppData\Microsoft\Windows\Start Menu\Programs\System Tools\Run.lnk'","c:5386" -Wait -NoNewWindow
-# Pin Google Chrome to Taskbar
-# Write-Verbose -Message "Pin Google Chrome to Taskbar..."
-# Start-Process -FilePath "PowerShell" -ArgumentList "syspin","'$Env:ProgramData\Microsoft\Windows\Start Menu\Programs\Google Chrome.lnk'","c:5386" -Wait -NoNewWindow
-
-# Install my PowerShell dot files
-# if (!(Test-Path -Path "$Env:UserProfile\dotposh" -PathType Container)) {
-#     Write-Verbose -Message "Install my PowerShell dot files..."
-#     Start-Process -FilePath "PowerShell" -ArgumentList "git","clone","https://github.com/mikepruett3/dotposh.git","$Env:UserProfile\dotposh" -Wait -NoNewWindow
-# @'
-# New-Item -Path $Env:UserProfile\Documents\WindowsPowerShell -ItemType Directory -ErrorAction Ignore
-# Remove-Item -Path $Env:UserProfile\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1 -Force
-# New-Item -Path $Env:UserProfile\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1 -ItemType SymbolicLink -Target $Env:UserProfile\dotposh\profile.ps1
-# '@ > $Env:Temp\dotposh.ps1
-#     Start-Process -FilePath "PowerShell" -ArgumentList "$Env:Temp\dotposh.ps1" -Verb RunAs -Wait -WindowStyle Hidden
-#     Remove-Item -Path $Env:Temp\dotposh.ps1 -Force
-# @'
-# cd $Env:UserProfile\dotposh
-# git submodule init
-# git submodule update
-# '@ > $Env:Temp\submodule.ps1
-#     Start-Process -FilePath "PowerShell" -ArgumentList "$Env:Temp\submodule.ps1" -Wait -NoNewWindow
-#     Remove-Item -Path $Env:Temp\submodule.ps1 -Force
-# }
-
-# Pin PowerShell to Taskbar
-# Write-Verbose -Message "Pin PowerShell to Taskbar..."
-# Start-Process -FilePath "PowerShell" -ArgumentList "syspin","'$Env:AppData\Microsoft\Windows\Start Menu\Programs\Windows PowerShell\Windows PowerShell.lnk'","c:5386" -Wait -NoNewWindow
-
-# # Install PowerShell 7
-# $PS7 = winget list --exact -q Microsoft.PowerShell
-# if (!$PS7) {
-#     Write-Verbose -Message "Installing PowerShell 7..."
-# @'
-# iex "& { $(irm https://aka.ms/install-powershell.ps1) } -UseMSI -Quiet"
-# '@ > $Env:Temp\ps7.ps1
-#     Start-Process -FilePath "PowerShell" -ArgumentList "$Env:Temp\ps7.ps1" -Verb RunAs -Wait -WindowStyle Hidden
-#     Remove-Item -Path $Env:Temp\ps7.ps1 -Force
-# }
-# Pin PowerShell 7 to Taskbar
-# Write-Verbose -Message "Pin PowerShell 7 to Taskbar..."
-# Start-Process -FilePath "PowerShell" -ArgumentList "syspin","'$Env:ProgramData\Microsoft\Windows\Start Menu\Programs\PowerShell\PowerShell 7 (x64).lnk'","c:5386" -Wait -NoNewWindow
-
 # Remove unused Packages/Applications
 Write-Verbose -Message "Removing Unused Applications..."
 $RemoveApps = @(
@@ -276,11 +198,6 @@ foreach ($item in $RemoveApps) {
     Remove-InstalledApp -Package $item
 }
 
-# Install Windows SubSystems for Linux
-# $wslInstalled = Get-Command "wsl" -CommandType Application -ErrorAction Ignore
-# if (!$wslInstalled) {
-#     Write-Verbose -Message "Installing Windows SubSystems for Linux..."
-#     Start-Process -FilePath "PowerShell" -ArgumentList "wsl","--install" -Verb RunAs -Wait -WindowStyle Hidden
-# }
+
 Write-Output "Install complete! Please reboot your machine/worksation!"
 Start-Sleep -Seconds 10
