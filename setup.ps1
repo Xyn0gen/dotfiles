@@ -141,7 +141,6 @@ if (!$(scoop config aria2-warning-enabled) -eq $False) {
 # Install WinGet Packages
 $WinGet = @(
     "Microsoft.PowerShell"
-    # "CodecGuide.K-LiteCodecPack.Basic",
     "Google.Chrome",
     "Discord.Discord",
     "clsid2.mpc-hc",
