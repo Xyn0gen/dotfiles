@@ -137,10 +137,11 @@ if (!$(scoop config aria2-warning-enabled) -eq $False) {
 }
 
 
+
 # Install WinGet Packages
 $WinGet = @(
     "Microsoft.PowerShell"
-    "CodecGuide.K-LiteCodecPack.Basic",
+    # "CodecGuide.K-LiteCodecPack.Basic",
     "Google.Chrome",
     "Discord.Discord",
     "clsid2.mpc-hc",
@@ -149,7 +150,8 @@ $WinGet = @(
     "OBSProject.OBSStudio",
     "JetBrains.IntelliJIDEA.Ultimate",
     "JetBrains.CLion",
-    "Git.Git"
+    "Git.Git",
+    "Notepad++.Notepad++"
     )
 foreach ($item in $WinGet) {
     Install-WinGetApp -PackageID "$item"
@@ -176,6 +178,13 @@ foreach ($item in $Scoop) {
     Install-ScoopApp -Package "$item"
 }
 
+# Custom install for K-Lite Standard
+# No media info, add to playlist and no keyframing
+# Download unattended ini
+(New-Object System.Net.WebClient).DownloadFile('https://gist.githubusercontent.com/Xyn0gen/a8c5ad4e97f360ac375df30e4825a923/raw', $Env:Temp+"\klcp_standard_unattended.ini")
+# set override arguments
+$override_args = '/VERYSILENT /NORESTART /SUPPRESSMSGBOXES /LOADINF="'+$Env:temp+'\klcp_standard_unattended.ini"'
+winget install "CodecGuide.K-LiteCodecPack.Standard" --override $override_args
 
 # Custom WinGet install for VSCode
 winget install Microsoft.VisualStudioCode --override '/SILENT /mergetasks="!runcode,addcontextmenufiles,addcontextmenufolders"'

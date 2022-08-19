@@ -1,4 +1,4 @@
-# dotfiles
+# dotfiles but windows so it's not really dotfiles and they're really bad
 
 ## Config Files for apps
 
