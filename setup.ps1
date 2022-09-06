@@ -150,7 +150,10 @@ $WinGet = @(
     "JetBrains.IntelliJIDEA.Ultimate",
     "JetBrains.CLion",
     "Git.Git",
-    "Notepad++.Notepad++"
+    "Notepad++.Notepad++",
+    "EclipseAdoptium.Temurin.8.JDK",
+    "EclipseAdoptium.Temurin.11.JDK",
+    "EclipseAdoptium.Temurin.17.JDK"
     )
 foreach ($item in $WinGet) {
     Install-WinGetApp -PackageID "$item"
@@ -163,10 +166,8 @@ Enable-Bucket -Bucket "java"
 # Install Scoop Packages
 $Scoop = @(
     "7zip",
+    "gallery-dl",
     "neovim",
-    "openjdk8-redhat",
-    "openjdk11",
-    "openjdk",
     "python",
     "yt-dlp",
     "ffmpeg",

@@ -27,6 +27,39 @@ function which($name)
     Get-Command $name | Select-Object -ExpandProperty Definition
 }
 
+function jpgtowebp() {
+	[CmdletBinding(PositionalBinding=$False)]
+    Param(
+        [Alias("q")]
+        [int]
+        $quality = -1,
+        
+        [Alias("r")]
+        [string]
+        $resize = ""
+    )
+    if (-Not $resize -match "(^\d{1,4}x\d{1,4}[^A-Za-z0-9]*$)|(\d{1,2}%$)|(100%)") {
+        $resize = ""
+    }
+    # $output = "original"
+	New-Item -ItemType Directory -Force -Path .\$output | Out-Null
+    if ($resize -eq "") {
+        if ($quality -eq -1) {
+            magick mogrify -strip -format webp -identify *.jpg
+        } else {
+            magick mogrify -strip -format webp -quality $quality -identify *.jpg
+        } 
+    } else {
+        if ($quality -eq -1) {
+            magick mogrify -strip -resize $resize -format webp -identify *.jpg
+        } else {
+            magick mogrify -strip -resize $resize -format webp -quality $quality -identify *.jpg
+        }
+    }
+    # Get-Item *.jpg | Move-Item -Destination .\$output
+    Get-ChildItem *.jpg | ForEach-Object {Recycle-Item $_.FullName}
+}
+
 function mergeAudio($video) {
     if (Test-Path($video)) {
         $output = (Get-Item $video).Name
@@ -113,6 +146,16 @@ function jpgq($a) {
     else {
         "Not a jpg"
     }
+}
+
+function Recycle-Item {
+    param([string] $Path)
+
+    $shell = New-Object -ComObject 'Shell.Application'
+
+    $shell.NameSpace(0).
+           ParseName($Path).
+           InvokeVerb('Delete')
 }
 
 # Write-Host "$PSCommandPath execution time: $executionTime"
