@@ -26,4 +26,4 @@ $E[0;31mdarre$E[0;37m@$E[0;33m%userdomain% $E[0;37min $E[0;32m$p $E[0;37m$b $t$h
 
 ## Install Apps
 
-```PowerShell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://gist.githubusercontent.com/Xyn0gen/ba6d61a4397bb45eaf3d9f216e63f047/raw/setup.ps1'))"```
+```PowerShell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Xyn0gen/dotfiles/main/setup.ps1'))"```
