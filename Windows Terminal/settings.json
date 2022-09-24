@@ -154,6 +154,18 @@
                 "hidden": true,
                 "name": "Developer PowerShell for VS 2022",
                 "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "commandline": "ssh -N -L 27017:localhost:27017 dsaw0002@34.129.141.2",
+                "guid": "{51cc9acd-6bda-44c2-b926-ffccfe1e91ea}",
+                "hidden": false,
+                "name": "mongodb remote server"
+            },
+            {
+                "commandline": "ssh ubuntu@130.162.192.59 -L 3390:127.0.0.1:3389 -N",
+                "guid": "{46a2677f-1315-43d2-9cda-392edc2401ad}",
+                "hidden": false,
+                "name": "remote desktop to vscode"
             }
         ]
     },

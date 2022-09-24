@@ -1,5 +1,8 @@
 # dotfiles but windows so it's not really dotfiles and they're really bad
 
+## Windows 11 Colour Theme
+`#588152`
+
 ## Config Files for apps
 
 ### aria2
