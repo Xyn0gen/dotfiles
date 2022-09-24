@@ -171,7 +171,9 @@ $Scoop = @(
     "python",
     "yt-dlp",
     "ffmpeg",
-    "imagemagick"
+    "imagemagick",
+    "pnpm",
+    "nodejs"
     )
 
 foreach ($item in $Scoop) {
@@ -191,7 +193,9 @@ winget install Microsoft.VisualStudioCode --override '/SILENT /mergetasks="!runc
 
 # Install Chocolatey Packages
 $Choco = @(
-    "eartrumpet"
+    "gsudo",
+    "msedgeredirect",
+    "quicklook"
 )
 foreach ($item in $Choco) {
     Install-ChocoApp -Package "$item"
