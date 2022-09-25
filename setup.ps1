@@ -7,6 +7,11 @@
     **NOTE** Will configure the Execution Policy for the "CurrentUser" to Unrestricted.
 #>
 
+if (-not (New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Write-Verbose "Re-run script in administrator mode!"
+    Break
+}
+
 $VerbosePreference = "Continue"
 
 function Install-ScoopApp {
