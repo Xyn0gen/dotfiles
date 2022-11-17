@@ -1,5 +1,8 @@
 # dotfiles but windows so it's not really dotfiles and they're really bad
 
+## 60 Days for update rollback
+`DISM /Online /Set-OSUninstallWindow /Value:60`
+
 ## Windows 11 Colour Theme
 `#588152`
 
